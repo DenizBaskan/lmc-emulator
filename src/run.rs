@@ -84,7 +84,13 @@ impl Runner {
                 '2' => self.acc -= self.fetch_mailbox_value(instruction),
                 '3' => {
                     let index = instruction[1..].parse::<i32>().unwrap() as usize;
-                    self.instructions[index] = self.acc.to_string();
+                    let mut value = self.acc.to_string();
+
+                    for _ in 0..(3 - value.len()) {
+                        value ="0".to_string() + value.as_str() 
+                    }
+
+                    self.instructions[index] = value;
                 },
                 '5' => self.acc = self.fetch_mailbox_value(instruction),
                 '6' => self.pc = instruction[1..].parse::<i32>().unwrap(),
